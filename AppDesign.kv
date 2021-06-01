@@ -1,0 +1,52 @@
+#:import sys sys
+
+
+ScreenManager:
+    MainScreen:
+    FirstScreen:
+
+<MainScreen>:
+    name: 'Main'
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+    MDSwitch:
+        pos_hint: {'center_x': .2, 'center_y': .5}
+        widget_style: 'ios'
+
+
+
+
+    MDToolbar:
+        title: "MDToolbar"
+        top: root.top
+        left_action_items: [["menu", lambda x: app.callback()]]
+
+    MDBottomAppBar:
+        MDToolbar:
+            icon: "git"
+            type: "bottom"
+            mode: "end"
+            on_action_button:
+
+
+    MDRoundFlatButton:
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        text: 'Hello World!'
+        on_release: app.change_screen('First', 'left')
+
+<FirstScreen>:
+    name: 'First'
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+    MDToolbar:
+        title: "MDToolbar"
+
+
+    MDRectangleFlatButton:
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        text: 'Ooog Booog'
+        on_release: app.change_screen('Main', 'right')
