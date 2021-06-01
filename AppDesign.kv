@@ -1,13 +1,54 @@
 #:import sys sys
 
+# Menu item in the DrawerList list.
+<ItemDrawer>:
+    theme_text_color: "Custom"
+    on_release: self.parent.set_color_item(self)
+
+    IconLeftWidget:
+        id: icon
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: root.text_color
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "56dp", "56dp"
+            source: "kivymd.png"
+
+    MDLabel:
+        text: "KivyMD library"
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    MDLabel:
+        text: "kivydevelopment@gmail.com"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    ScrollView:
+
+        DrawerList:
+            id: md_list
 
 ScreenManager:
     LoginScreen:
     SignupScreen:
     HomeScreen:
     SettingScreen:
-
-
 
 
 <LoginScreen>:
@@ -46,10 +87,12 @@ ScreenManager:
         elevation: 5
         left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
 
-    MDNavigationDrawer:
-        id: nav_drawer
-        ContentNavigationDrawer:
-
+        Widget:
+        
+    MDNavigationLayout:
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
 
 <SettingScreen>:
     name: 'Settings'
@@ -71,27 +114,3 @@ ScreenManager:
     MDSwitch:
         pos_hint: {'center_x': .2, 'center_y': .55}
         widget_style: 'ios'
-
-
-<ContentNavigationDrawer>:
-    MDNavigationDrawer:
-        id: nav_drawer
-        ContentNavigationDrawer:
-
-    ScrollView:
-
-        MDList:
-
-
-
-            OneLineListItem:
-                text: "Screen 1"
-                on_release:
-                    nav_drawer.set_state('close')
-                    app.change_screen('Settings', 'right')
-
-            OneLineListItem:
-                text: "Screen 2"
-                on_press:
-                    root.nav_drawer.set_state("close")
-                    root.screen_manager.current = "scr 2"
