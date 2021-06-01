@@ -2,11 +2,16 @@
 
 
 ScreenManager:
-    MainScreen:
-    FirstScreen:
+    LoginScreen:
+    SignupScreen:
+    HomeScreen:
+    SettingScreen:
 
-<MainScreen>:
-    name: 'Main'
+
+
+
+<LoginScreen>:
+    name: 'Login'
 
     MDBoxLayout:
         orientation: "vertical"
@@ -16,38 +21,77 @@ ScreenManager:
         widget_style: 'ios'
 
 
-
-
-    MDToolbar:
-        title: "MDToolbar"
-        top: root.top
-        left_action_items: [["menu", lambda x: app.callback()]]
-
     MDBottomAppBar:
         MDToolbar:
             icon: "git"
             type: "bottom"
             mode: "end"
-            on_action_button: app.change_screen('First', 'left')
+            on_action_button: app.change_screen('Settings', 'left')
 
 
     MDRoundFlatButton:
         pos_hint: {'center_x': .5, 'center_y': .5}
         text: 'Hello World!'
-        on_release: app.change_screen('First', 'left')
+        on_release: app.change_screen('Home', 'left')
 
-<FirstScreen>:
-    name: 'First'
+<HomeScreen>:
+    name: 'Home'
 
     MDBoxLayout:
         orientation: "vertical"
 
     MDToolbar:
         title: "MDToolbar"
+        top: root.top
+        elevation: 5
+        left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        ContentNavigationDrawer:
+
+
+<SettingScreen>:
+    name: 'Settings'
+
+    MDToolbar:
+        title: "Settings"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Login','right')]]
+
+
+    MDSwitch:
+        pos_hint: {'center_x': .2, 'center_y': .85}
+        widget_style: 'ios'
+
+    MDSwitch:
+        pos_hint: {'center_x': .2, 'center_y': .75}
+        widget_style: 'ios'
+
+    MDSwitch:
+        pos_hint: {'center_x': .2, 'center_y': .55}
+        widget_style: 'ios'
+
+
+<ContentNavigationDrawer>:
+    MDNavigationDrawer:
+        id: nav_drawer
+        ContentNavigationDrawer:
+
+    ScrollView:
+
+        MDList:
 
 
 
-    MDRectangleFlatButton:
-        pos_hint: {'center_x': .5, 'center_y': .5}
-        text: 'Ooog Booog'
-        on_release: app.change_screen('Main', 'right')
+            OneLineListItem:
+                text: "Screen 1"
+                on_release:
+                    nav_drawer.set_state('close')
+                    app.change_screen('Settings', 'right')
+
+            OneLineListItem:
+                text: "Screen 2"
+                on_press:
+                    root.nav_drawer.set_state("close")
+                    root.screen_manager.current = "scr 2"
