@@ -7,6 +7,8 @@
     padding: "8dp"
     spacing: "8dp"
 
+
+
     AnchorLayout:
         anchor_x: "left"
         size_hint_y: None
@@ -30,10 +32,27 @@
         size_hint_y: None
         height: self.texture_size[1]
 
+    OneLineIconListItem:
+        text: 'Login'
+        on_press: lambda x: nav_drawer.set_state("close")
+        on_release: app.change_screen('Login', 'left')
+        IconLeftWidget:
+            icon: 'git'
+
+    OneLineIconListItem:
+        text: 'Home'
+        on_release: app.change_screen('Home', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+
+
     ScrollView:
 
-        DrawerList:
-            id: md_list
+    DrawerList:
+        id: md_list
+
+
 
 <ItemDrawer>:
     theme_text_color: "Custom"
@@ -77,6 +96,20 @@ ScreenManager:
         text: 'Hello World!'
         on_release: app.change_screen('Home', 'left')
 
+    MDToolbar:
+        title: "MDToolbar"
+        top: root.top
+        elevation: 5
+        left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+
+        ContentNavigationDrawer:
+            nav_drawer: nav_drawer
+
+
 <HomeScreen>:
     name: 'Home'
 
@@ -90,12 +123,10 @@ ScreenManager:
         left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
 
 
-
-
     MDNavigationDrawer:
         id: nav_drawer
+
         ContentNavigationDrawer:
-            Widget:
 
 
 <SettingScreen>:
