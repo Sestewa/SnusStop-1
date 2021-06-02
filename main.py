@@ -54,6 +54,17 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.primary_color
 
+
+
+class MainApp(MDApp):
+    def build(self):
+        return Builder.load_file('AppDesign.kv')
+
+
+    def change_screen(self, screen, direction):
+        self.root.transition.direction = direction
+        self.root.current = screen
+
     def on_start(self):
         icons_item = {
         "folder": "My files",
@@ -64,19 +75,9 @@ class DrawerList(ThemableBehavior, MDList):
         "upload": "Upload",
         }
         for icon_name in icons_item.keys():
-            self.root.ids.content_drawer.ids.md_list.add_widget(
-                ItemDrawer(icon=icon_name, text=icons_item[icon_name])
+            self.root.ids.drawer.ids.md_list.add_widget(
+            ItemDrawer(icon=icon_name, text=icons_item[icon_name])
             )
-
-
-class MainApp(MDApp):
-    def build(self):
-        return Builder.load_file('AppDesign.kv')
-
-    def change_screen(self, screen, direction):
-        self.root.transition.direction = direction
-        self.root.current = screen
-
 
 
 MainApp().run()
