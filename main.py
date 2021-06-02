@@ -37,8 +37,7 @@ class ScreenManager(ScreenManager):
 
 
 class ContentNavigationDrawer(BoxLayout):
-    screen_manager = ObjectProperty()
-    nav_drawer = ObjectProperty()
+    pass
 
 class ItemDrawer(OneLineIconListItem):
     icon = StringProperty()
@@ -54,6 +53,19 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.primary_color
 
+    def on_start(self):
+        icons_item = {
+        "folder": "My files",
+        "account-multiple": "Shared with me",
+        "star": "Starred",
+        "history": "Recent",
+        "checkbox-marked": "Shared with me",
+        "upload": "Upload",
+        }
+        for icon_name in icons_item.keys():
+            self.root.ids.nav_drawer.ids.md_list.add_widget(
+                ItemDrawer(icon=icon_name, text=icons_item[icon_name])
+            )
 
 
 class MainApp(MDApp):
@@ -65,19 +77,7 @@ class MainApp(MDApp):
         self.root.transition.direction = direction
         self.root.current = screen
 
-    def on_start(self):
-        icons_item = {
-        "folder": "My files",
-        "account-multiple": "Shared with me",
-        "star": "Starred",
-        "history": "Recent",
-        "checkbox-marked": "Shared with me",
-        "upload": "Upload",
-        }
-        for icon_name in icons_item.keys():
-            self.root.ids.drawer.ids.md_list.add_widget(
-            ItemDrawer(icon=icon_name, text=icons_item[icon_name])
-            )
+
 
 
 MainApp().run()
