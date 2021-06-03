@@ -8,7 +8,6 @@ from kivymd.theming import ThemableBehavior
 from kivy.animation import Animation
 from kivy.clock import Clock
 
-
 #Uix import
 from kivy.uix.behaviors import TouchRippleBehavior
 from kivy.uix.button import Button
@@ -18,6 +17,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.carousel import Carousel
 
 Window.size = (350,600)
 
@@ -56,6 +56,9 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.primary_color
 
+class YourCarousel(Carousel):
+    pass
+
 
 
 
@@ -65,6 +68,7 @@ class MainApp(MDApp):
         'language-php': 'PHP',
         'git': 'Git',
     }
+
 
     def change_screen(self, screen, direction):
         self.root.transition.direction = direction

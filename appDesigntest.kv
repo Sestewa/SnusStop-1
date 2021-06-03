@@ -13,6 +13,7 @@ ScreenManager:
         radius: [20,]
 
 
+
 <ContentNavigationDrawer>:
     orientation: "vertical"
     padding: "8dp"
@@ -30,13 +31,13 @@ ScreenManager:
             source: "kivymd.png"
 
     MDLabel:
-        text: 'Name'
+        text: 'John Doe'
         font_style: "Button"
         size_hint_y: None
         height: self.texture_size[1]
 
     MDLabel:
-        text: "Name@Gmail.com"
+        text: "JohnDoe@mail.com"
         font_style: "Caption"
         size_hint_y: None
         height: self.texture_size[1]
@@ -102,7 +103,7 @@ ScreenManager:
             adaptive_height: True
 
         MDLabel:
-            text: "Penge sparet"
+            text: "Du har været snusfri i: 15dage"
             theme_text_color: "Secondary"
             size_hint_y: None
             height: self.texture_size[1]
@@ -111,7 +112,7 @@ ScreenManager:
             height: "1dp"
 
         MDLabel:
-            text: "250 Kr. Denne Måned"
+            text: "Penge sparet: 250 Kr Denne Måned!"
 
     MDCard:
         orientation: "vertical"
@@ -163,12 +164,6 @@ ScreenManager:
 <ArticleScreen>:
     name: 'Article'
 
-    MDToolbar:
-        title: "Back"
-        top: root.top
-        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
-
-
     MDScreen:
 
         MDToolbar:
@@ -176,12 +171,12 @@ ScreenManager:
             title: "MDSwiper"
             elevation: 10
             pos_hint: {"top": 1}
+            left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
 
         MDSwiper:
-            size_hint_y: None
-            height: '150dp'
-            pos_hint: {'center_x':.5,'center_y':.1}
-
+            size_hint: None, None
+            size: '350dp', '150dp'
+            pos_hint: {'center_x': .5, 'center_y': .7}
             MySwiper:
 
             MySwiper:
@@ -191,6 +186,7 @@ ScreenManager:
             MySwiper:
 
             MySwiper:
+
 
 
 <MoneyScreen>:
@@ -206,11 +202,24 @@ ScreenManager:
 <ProfileScreen>:
     name: 'Profile'
 
+    Carousel:
+        size_hint: None, None
+        size: "259dp", "580dp"
+        pos_hint: {'center_x': .5,'center_y': .7}
+        direction: 'right'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-1.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-2.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-3.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-4.png'
+
     MDToolbar:
         title: "Back"
         top: root.top
         left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
-
 
 <SettingScreen>:
     name: 'Settings'
