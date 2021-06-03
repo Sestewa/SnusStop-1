@@ -1,0 +1,254 @@
+
+ScreenManager:
+    HomeScreen:
+    SettingScreen:
+    MoneyScreen:
+    ArticleScreen:
+    ProfileScreen
+
+<MySwiper@MDSwiperItem>
+
+    FitImage:
+        source: "kivymd.png"
+        radius: [20,]
+
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "80dp", "80dp"
+            source: "kivymd.png"
+
+    MDLabel:
+        text: 'Name'
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    MDLabel:
+        text: "Name@Gmail.com"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    OneLineIconListItem:
+        text: 'Profile'
+        on_press: lambda x: nav_drawer.set_state("close")
+        on_release: app.change_screen('Profile', 'left')
+        IconLeftWidget:
+            icon: 'git'
+
+    OneLineIconListItem:
+        text: 'Home'
+        on_release: app.change_screen('Home', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+
+    OneLineIconListItem:
+        text: 'Money'
+        on_release: app.change_screen('Money', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+
+    OneLineIconListItem:
+        text: 'Settings'
+        on_release: app.change_screen('Settings', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+
+    ScrollView:
+        DrawerList:
+            id: md_list
+
+
+
+<HomeScreen>:
+    name: 'Home'
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+
+    MDToolbar:
+        title: 'Account: Name'
+        top: root.top
+        elevation: 5
+        left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+
+
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "120dp"
+        pos_hint: {"center_x": .5, "center_y": .75}
+        on_release: app.change_screen('Money', 'left')
+
+        FitImage:
+            source: 'penge.png'
+            adaptive_height: True
+
+        MDLabel:
+            text: "Penge sparet"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "250 Kr. Denne Måned"
+
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .5, "center_y": .55}
+        on_release: app.change_screen('Money', 'left')
+
+        MDLabel:
+            text: "Få hjælp her"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Hjælp til snus stop"
+
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .5, "center_y": .35}
+        on_release: app.change_screen('Article', 'left')
+
+        MDLabel:
+            text: "Artikler"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Læs de nyeste artikler om snus her"
+
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        ContentNavigationDrawer:
+
+
+
+<ArticleScreen>:
+    name: 'Article'
+
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+
+    MDScreen:
+
+        MDToolbar:
+            id: toolbar
+            title: "MDSwiper"
+            elevation: 10
+            pos_hint: {"top": 1}
+
+        MDSwiper:
+            size_hint_y: None
+            height: '150dp'
+            pos_hint: {'center_x':.5,'center_y':.1}
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+
+<MoneyScreen>:
+    name: 'Money'
+
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+
+
+<ProfileScreen>:
+    name: 'Profile'
+
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+
+<SettingScreen>:
+    name: 'Settings'
+
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+
+    MDCard:
+        orientation: 'vertical'
+        size_hint: None, None
+        size: '350dp', '535dp'
+        pos_hint: {'center_x': .5, 'center_y': .448}
+        padding: '8dp'
+
+        MDLabel:
+            text: 'Setting 1'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 2'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 3'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 4'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 5'
+        MDSwitch:
+            widget_style: 'ios'

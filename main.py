@@ -3,8 +3,11 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.core.window import Window
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import BooleanProperty, NumericProperty, ObjectProperty, StringProperty
 from kivymd.theming import ThemableBehavior
+from kivy.animation import Animation
+from kivy.clock import Clock
+
 
 #Uix import
 from kivy.uix.behaviors import TouchRippleBehavior
@@ -13,20 +16,21 @@ from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.uix.list import OneLineIconListItem, MDList
-
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.anchorlayout import AnchorLayout
 
 Window.size = (350,600)
 
 class HomeScreen(Screen):
     pass
 
-class LoginScreen(Screen):
+class ProfileScreen(Screen):
     pass
 
-class SignupScreen(Screen):
+class MoneyScreen(Screen):
     pass
 
-class HomeScreen(Screen):
+class ArticleScreen(Screen):
     pass
 
 class SettingScreen(Screen):
@@ -34,7 +38,6 @@ class SettingScreen(Screen):
 
 class ScreenManager(ScreenManager):
     pass
-
 
 class ContentNavigationDrawer(BoxLayout):
     pass
@@ -55,16 +58,21 @@ class DrawerList(ThemableBehavior, MDList):
 
 
 
-class MainApp(MDApp):
-    def build(self):
-        return Builder.load_file('AppDesign.kv')
 
+class MainApp(MDApp):
+    data = {
+        'language-python': 'Python',
+        'language-php': 'PHP',
+        'git': 'Git',
+    }
 
     def change_screen(self, screen, direction):
         self.root.transition.direction = direction
         self.root.current = screen
 
 
+    def build(self):
+        return Builder.load_file('appDesigntest.kv')
 
 
 MainApp().run()
