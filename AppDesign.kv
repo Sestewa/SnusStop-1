@@ -1,153 +1,469 @@
-#:import sys sys
 
-# Menu item in the DrawerList list.
 
+#Screenmanager gør så vi kan navigere mellem skærme (den øverste er startsiden)
+ScreenManager:
+    LoginScreen:
+    HomeScreen:
+    SettingScreen:
+    SparetScreen:
+    ArticleScreen:
+    ProfileScreen
+    HelpScreen:
+
+#Her laver vi en swiper item klasse for få billed ind som kan swipes med (Blev ikke færdigjort)
+<MySwiper@MDSwiperItem>
+
+    FitImage:
+        source: "kivymd.png"
+        radius: [20,]
+
+
+#Vores ContentNavDrawer er menuen hvor vi kan navigere rundt til forskellige sider
 <ContentNavigationDrawer>:
     orientation: "vertical"
     padding: "8dp"
     spacing: "8dp"
 
-
-
+    #AnchorLayout Bruger vi til at opbevare billedet i da vi har bedere mulighed for at rykke rundt på det
     AnchorLayout:
         anchor_x: "left"
         size_hint_y: None
-        height: avatar.height
+        height: avatar.height #
 
         Image:
             id: avatar
             size_hint: None, None
-            size: "56dp", "56dp"
+            size: "80dp", "80dp"
             source: "kivymd.png"
 
+    #Vi laver en label for navnet på brugeren
     MDLabel:
-        text: "KivyMD library"
+        text: 'John Doe'
         font_style: "Button"
         size_hint_y: None
         height: self.texture_size[1]
 
+    #Vi laver et label for mailen på brugeren
     MDLabel:
-        text: "kivydevelopment@gmail.com"
+        text: "JohnDoe@mail.com"
         font_style: "Caption"
         size_hint_y: None
         height: self.texture_size[1]
 
+    #Vi laver den første clickable menu some er for profilen
     OneLineIconListItem:
-        text: 'Login'
+        text: 'Profil'
         on_press: lambda x: nav_drawer.set_state("close")
-        on_release: app.change_screen('Login', 'left')
+        on_release: app.change_screen('Profile', 'left')
         IconLeftWidget:
             icon: 'git'
-
+    #Clickable menu for Hjemme skærm
     OneLineIconListItem:
-        text: 'Home'
+        text: 'Hjemme Skærm'
         on_release: app.change_screen('Home', 'left')
         on_press: lambda x: nav_drawer.set_state("close")
         IconLeftWidget:
             icon: 'git'
+    #Clickable menu for snus stop(hvor du ser hvor meget du har sparet osv)
+    OneLineIconListItem:
+        text: 'Snus Stop'
+        on_release: app.change_screen('Sparet', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+    #Clickable menu for hjælp til snus stop
+    OneLineIconListItem:
+        text: 'Hjælp til stop'
+        on_release: app.change_screen('Help', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+    #Clickable menu for at læse artikler omkring snus
+    OneLineIconListItem:
+        text: 'Artikler'
+        on_release: app.change_screen('Article', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
+    #Clickable menu for at komme til indstillinger
+    OneLineIconListItem:
+        text: 'Indstillinger'
+        on_release: app.change_screen('Settings', 'left')
+        on_press: lambda x: nav_drawer.set_state("close")
+        IconLeftWidget:
+            icon: 'git'
 
-
+    #Vi giver den muligheden for at scroll, og smider menuerne under og giver dem id'et md_list
     ScrollView:
-
-    DrawerList:
-        id: md_list
-
+        DrawerList:
+            id: md_list
 
 
-<ItemDrawer>:
-    theme_text_color: "Custom"
-    on_release: self.parent.set_color_item(self)
-
-    IconLeftWidget:
-        id: icon
-        icon: root.icon
-        theme_text_color: "Custom"
-        text_color: root.text_color
-
-
-ScreenManager:
-    LoginScreen:
-    SignupScreen:
-    HomeScreen:
-    SettingScreen:
-
-
+#Her er vores første skærm man møder
 <LoginScreen>:
-    name: 'Login'
 
-    MDBoxLayout:
+    #Vi laver et kort med nogle størrelser og placeringer og giver den noget tekst
+    MDCard:
         orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .77, "center_y": .9}
 
-    MDSwitch:
-        pos_hint: {'center_x': .2, 'center_y': .5}
-        widget_style: 'ios'
+        MDLabel:
+            text: "Snus Stop"
 
+    #Vi indsætter vorse logo
+    AsyncImage:
+        source: 'SnusStop.png'
+        pos_hint: {"center_x": .5, "center_y": .5}
 
-    MDBottomAppBar:
-        MDToolbar:
-            icon: "git"
-            type: "bottom"
-            mode: "end"
-            on_action_button: app.change_screen('Settings', 'left')
-
-
-    MDRoundFlatButton:
-        pos_hint: {'center_x': .5, 'center_y': .5}
-        text: 'Hello World!'
-        on_release: app.change_screen('Home', 'left')
-
-    MDToolbar:
-        title: "MDToolbar"
-        top: root.top
-        elevation: 5
-        left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
+    #Vi laver en knap der skifter til hjemme skærmen
+    MDRaisedButton:
+        text: "Login"
+        pos_hint: {"center_x": .5, "center_y": .1}
+        on_release: app.change_screen('Home', 'up')
 
 
-    MDNavigationDrawer:
-        id: nav_drawer
-
-        ContentNavigationDrawer:
-            nav_drawer: nav_drawer
-
-
-
-
+#Her er vorse hjemme skærm som indeholder en topbar med en menu, kort som er clickable og føre til andre sider.
 <HomeScreen>:
     name: 'Home'
 
+    #vi laver et BoxLayout for at
     MDBoxLayout:
         orientation: "vertical"
 
+    #Vi laver en topbar med en menu i venstre side
     MDToolbar:
-        title: "MDToolbar"
+        title: 'Hjemme Skærm'
         top: root.top
         elevation: 5
         left_action_items: [["menu", lambda x: nav_drawer.set_state('open')]]
 
 
+
+    #vi laver et kort som viser hvor mange penge du har sparet denne måned
+    #og et lille billede af penge, hvis du klikker på den bliver du taget til
+    #Snus Stop skærmen hvor du kan se hvor meget du har sparet osv.
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .5, "center_y": .75}
+        on_release: app.change_screen('Sparet', 'left')
+        elevation: 20
+
+        FitImage:
+            source: 'penge.png'
+            adaptive_height: True
+
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Penge sparet: 250 Kr Denne Måned!"
+
+    #Vi laver et kort til hjælp til snusstop siden, hvor den har noget sekunder text og primær tekst
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .5, "center_y": .55}
+        on_release: app.change_screen('Help', 'left')
+        elevation: 20
+
+        MDLabel:
+            text: "Få hjælp her"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Hjælp til snus stop"
+
+    #Vi laver et kort til at læse artikler, som indeholder primær og sekunder tekst
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "90dp"
+        pos_hint: {"center_x": .5, "center_y": .35}
+        on_release: app.change_screen('Article', 'left')
+        elevation: 20
+
+        MDLabel:
+            text: "Artikler"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Læs de nyeste artikler om snus her"
+
+    #Vi hengiver vores navdrawer her og indsætter vores contentdrawer ind i den så vi får menuerne
     MDNavigationDrawer:
         id: nav_drawer
-
         ContentNavigationDrawer:
 
 
+#Her har vi vores artikel skærm (blev ikke færdig)
+<ArticleScreen>:
+    name: 'Article'
+    # Vi laver en MDScreen som indeholder vores swiper for sigselv så vi ikke swiper hede programmet
+    MDScreen:
+
+        MDToolbar:
+            id: toolbar
+            title: "MDSwiper"
+            elevation: 10
+            pos_hint: {"top": 1}
+            left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+        MDSwiper:
+            size_hint: None, None
+            size: '350dp', '150dp'
+            pos_hint: {'center_x': .5, 'center_y': .7}
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+    #Vi laver et kort der skulle kunne vise en artikel som man skal kunne klikke på
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "80dp"
+        pos_hint: {"center_x": .5, "center_y": .40}
+        elevation: 20
+
+        MDLabel:
+            text: "Sunhedsstyrelsens nye regler om snus"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Sundhedsstyrelsen"
+
+
+#Her har vi vorse snus stop hjælp skærm som har en swiper igen
+<HelpScreen>:
+    name: 'Help'
+    # Vi laver igen en skærm som indeholder swiperen
+    MDScreen:
+
+        MDToolbar:
+            id: toolbar
+            title: "MDSwiper"
+            elevation: 10
+            pos_hint: {"top": 1}
+            left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+        MDSwiper:
+            size_hint: None, None
+            size: '350dp', '150dp'
+            pos_hint: {'center_x': .5, 'center_y': .7}
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+
+            MySwiper:
+    #Vi laver også et kort som skulle kunne representere at den indeholder en artikel
+    #eller en motivation booster til hjælp
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "80dp"
+        pos_hint: {"center_x": .5, "center_y": .40}
+        elevation: 20
+
+        MDLabel:
+            text: "Nye Tips Til Hjælp Af Snus Stop"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Snus stop på 10 dage"
+
+
+#Her er vorse sparet screen som indeholder en carousel som gør at man kan indsætte billeder der kan slides til side
+<SparetScreen>:
+    name: 'Sparet'
+    #Vi laver en carousel til at representere at man kan indsætte billeder som kan slides
+    Carousel:
+        size_hint: None, None
+        size: "280dp", "580dp"
+        pos_hint: {'center_x': .5,'center_y': .78}
+        direction: 'right'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-1.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-2.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-3.png'
+        AsyncImage:
+            source: 'http://placehold.it/480x270.png&text=slide-4.png'
+    #Vi laver et kort over hvor mange dage siden de har stoppet
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "80dp"
+        pos_hint: {"center_x": .5, "center_y": .55}
+        elevation: 20
+
+        MDLabel:
+            text: "Dage siden dit snus stop"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Dage: 15"
+
+
+    #Kort omkring stykker de ikke har taget den måned
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "80dp"
+        pos_hint: {"center_x": .5, "center_y": .40}
+        elevation: 20
+
+        MDLabel:
+            text: "Stykker Snus ikke taget denne måned"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Stykker: 80"
+    #Kort omkring penge sparet denne måned
+    MDCard:
+        orientation: "vertical"
+        padding: "8dp"
+        size_hint: None, None
+        size: "280dp", "80dp"
+        pos_hint: {"center_x": .5, "center_y": .25}
+        elevation: 20
+
+        MDLabel:
+            text: "Penge sparet denne måned"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDSeparator:
+            height: "1dp"
+
+        MDLabel:
+            text: "Sparet: 250 Kr"
+
+    #Her laver vi en dato vælger for at man kan vælge når man starter
+    MDFloatLayout:
+
+        MDToolbar:
+            title: "MDDatePicker"
+
+            pos_hint: {"top": 1}
+            elevation: 10
+
+        MDRaisedButton:
+
+
+            text: "Vælg start dato for stop af snus"
+            pos_hint: {'center_x': .5, 'center_y': .1}
+            on_release: app.show_date_picker()
+
+    #vi laver topbar der indeholder en tilbage knap
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+
+#Her har vi profilescreen som er for brugerens profil(indeholder ikke noget)
+<ProfileScreen>:
+    name: 'Profile'
+
+    #Den har en toobar til at gå tilbage til hjemme skærmen
+    MDToolbar:
+        title: "Back"
+        top: root.top
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
+
+#her har vi vores settingsscreen som har nogle switches der kan tændes og slukkes men gør intet
 <SettingScreen>:
     name: 'Settings'
-
+    #Toolbar til at gå tilbage til hjemmeskærm
     MDToolbar:
-        title: "Settings"
+        title: "Back"
         top: root.top
-        left_action_items: [["arrow-left", lambda x: app.change_screen('Login','right')]]
+        left_action_items: [["arrow-left", lambda x: app.change_screen('Home','right')]]
 
+    #Kort der indeholder switches
+    MDCard:
+        orientation: 'vertical'
+        size_hint: None, None
+        size: '350dp', '535dp'
+        pos_hint: {'center_x': .5, 'center_y': .448}
+        padding: '8dp'
 
-    MDSwitch:
-        pos_hint: {'center_x': .2, 'center_y': .85}
-        widget_style: 'ios'
+        MDLabel:
+            text: 'Setting 1'
+        MDSwitch:
+            widget_style: 'ios'
 
-    MDSwitch:
-        pos_hint: {'center_x': .2, 'center_y': .75}
-        widget_style: 'ios'
+        MDLabel:
+            text: 'Setting 2'
+        MDSwitch:
+            widget_style: 'ios'
 
-    MDSwitch:
-        pos_hint: {'center_x': .2, 'center_y': .55}
-        widget_style: 'ios'
+        MDLabel:
+            text: 'Setting 3'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 4'
+        MDSwitch:
+            widget_style: 'ios'
+
+        MDLabel:
+            text: 'Setting 5'
+        MDSwitch:
+            widget_style: 'ios'
